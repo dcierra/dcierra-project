@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Сообщение для: {{ recipient.username }}{% endblock %}
+
+{% block content %}
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a href="{% url 'profile_user' recipient.id %}" class="backButton"><i class="fa-solid fa-backward"></i></a><br>
+
+                <form class="form" method="POST">
+                    {% csrf_token %}
+
+                    {% if not request.user.is_authenticated %}
+                        {% for field in form %}
+                            <div class="form__field">
+                                <label> {{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="form__field">
+                            <label> {{ form.subject.label }}</label>
+                            {{ form.subject }}
+                        </div>
+
+                        <div class="form__field">
+                            <label> {{ form.body.label }}</label>
+                            {{ form.body }}
+                        </div>
+                    {% endif %}
+
+                    <input class="btn btn--sub btn--lg my-md" type="submit" value="Отправить">
+                </form>
+
+            </div>
+        </div>
+    </main>
+{% endblock %}

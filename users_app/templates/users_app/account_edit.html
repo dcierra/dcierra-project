@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Личный кабинет - {{ profile.username }} {% endblock %}
+
+{% block content %}
+    <main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a>
+
+            <form class="form" action="{% url 'account_edit' %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form__field">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+
+                <input class="btn btn--sub btn--lg my-md" type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
+    </main>
+{% endblock %}

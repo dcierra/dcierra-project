@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Проекты PyQt{% endblock %}
+
+{% block content %}
+    <main class="projects">
+        <section class="hero-section text-center">
+            <div class="container container--narrow">
+                <div class="hero-section__box">
+                    <h2>Поиск среди PyQt проектов</h2>
+                </div>
+                <div class="hero-section__search">
+                    <form action="{% url 'pyqt_projects' %}" id="search_form" class="form" method="GET">
+                        <div class="form__field">
+                            <label for="formInput#search">Поиск среди PyQt проектов</label>
+                            <input type="text" class="input input--text" id="formInput#search" name="search_query" value="{{ search_query }}" placeholder="Поиск по названию, описанию проекта..">
+                        </div>
+
+                        <input type="submit" value="Поиск" class="btn btn--sub btn--lg">
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="projectsList">
+            <div class="container">
+                <div class="grid grid--three">
+                    {% for project in projects %}
+                        <div class="column">
+                            <div class="card project">
+                                <a href="{% url 'pyqt_project_page' project.id %}" class="project">
+                                    <img src="{{ project.image_url }}" alt="project img" class="project__thumbnail">
+                                    <div class="card__body">
+                                        <h3 class="project__title">{{ project.title }}</h3>
+                                        <p><a href="{% url 'profile_user' project.owner.id %}" class="project__author">Добавил: {{ project.owner.username }}</a></p>
+                                        <a href=""></a><p><span style="font-weight: bold; font-size: 18px;">Описание: {{ project.description|truncatechars:50 }}</span></p>
+                                        <h5 class="project--rating">
+                                            <span style="font-size: 16px;">Рейтинг: {{ project.like_total }}</span>
+                                        </h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% include 'pagination.html' with queryset=projects custom_range=custom_range %}
+    </main>
+{% endblock %}

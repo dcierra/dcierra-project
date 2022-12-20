@@ -1,0 +1,30 @@
+.avatar {
+  border-radius: 50%;
+  border: 2px solid var(--color-main);
+  object-fit: cover;
+}
+
+.home--page {
+  height: 30rem;
+  width: 30rem;
+}
+
+.avatar--xl {
+  height: 20rem;
+  width: 20rem;
+}
+
+.avatar--lg {
+  height: 15rem;
+  width: 15rem;
+}
+
+.avatar--md {
+  height: 7rem;
+  width: 7rem;
+}
+
+.avatar--sm {
+  height: 5rem;
+  width: 5rem;
+}

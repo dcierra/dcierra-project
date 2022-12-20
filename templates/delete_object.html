@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление {{ object }}{% endblock %}
+
+{% block content %}
+    <main class="formPage my-xl">
+        <div class="formWrapper">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Вы уверены, что хотите удалить "{{ object }}"?</h2>
+                <a class="btn btn--sub btn--lg" href="{{ request.GET.next }}">Назад</a>
+
+                <input type="submit" value="Подтвердить" class="btn btn--sub btn--lg my-md">
+            </form>
+        </div>
+    </main>
+{% endblock %}

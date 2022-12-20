@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Просмотр сообщения{% endblock %}
+
+{% block content %}
+    <main class="messagePage my-xl">
+        <div class="content-box">
+            <div class="message">
+                <a class="backButton" href="{% url 'inbox' %}"><i class="fa-solid fa-backward"></i></a>
+                <h4 class="message__subject"> {{ message.subject }}</h4>
+
+                {% if message.sender.id %}
+                    <p class="message__date"><strong>Логин отправителя:</strong> <a href="{% url 'profile_user' message.sender.id %}" class="message__author">{{ message.sender.username }}</a></p>
+                {% endif %}
+
+                {% if message.email %}
+                    <p class="message__date"><strong>Эл. почта отправителя:</strong> {{ message.email }}</p>
+                {% endif %}
+
+                <p class="message__date">{{ message.created }}</p>
+                <div class="message__body">
+                    {{ message.body|linebreaksbr }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

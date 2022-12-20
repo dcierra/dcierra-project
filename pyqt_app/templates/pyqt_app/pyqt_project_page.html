@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница проекта {{ project.title }}{% endblock %}
+
+{% block content %}
+    <main class="singleProject my-md">
+        <div class="container">
+            <div class="layout">
+                <div class="column column--1of3">
+                    <h2 class="singleProject__title">{{ project.title }}</h2>
+                    <h3 class="singleProject__subtitle">Описание проекта</h3>
+                    <div class="singleProject__intro"> {{ project.description }}</div>
+                </div>
+                <div class="column column--2of3">
+                    <img src="{{ project.image_url }}" alt="project_image" class="singleProject__preview">
+                    {% if project.link_github %}<a class="singleProject__liveLink" href="{{ project.link_github }}" target="_blank">Ссылка на GitHub</a>{% endif %}
+                    <div class="comments">
+                        <h3 class="singleProject__subtitle">Рейтинг: </h3>
+                        <div id="like_total">
+                            <h5 class="project--rating">{{ project.like_total }}</h5>
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.profile.id in project.user_like %}
+                            <div class="form__field">
+                                <form action="{% url 'pyqt_project_vote' project.id 'Dislike' %}" method="POST" style="display: inline-block">
+                                    {% csrf_token %}
+                                    <button type="submit" class="unlike-btn fa-sharp fa-solid fa-heart"></button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div class="form__field">
+                                <form action="{% url 'pyqt_project_vote' project.id 'Like' %}" method="POST" style="display: inline-block">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-btn fa-sharp fa-solid fa-heart"></button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="comments">
+                        {% if request.user.profile.id not in project.reviewers and request.user.profile.id in project.user_send_vote  %}
+                            <p>Вы уже оставили отзыв к этому проекту!</p>
+                        {% elif request.user.profile == project.owner %}
+                            <p>Вы не можете оставлять отзывы к вашим проектам!</p>
+                        {% elif request.user.is_authenticated %}
+                            <form class="form" action="{% url 'pyqt_project_page' project.id %}" method="POST">
+                                {% csrf_token %}
+                                    <div class="form__field">
+                                        {{ form.review_body.label }}
+                                        {{ form.review_body }}
+                                    </div>
+                                    <input class="btn btn--sub btn--lg" type="submit" value="Отправить" />
+                            </form>
+                        {% else %}
+                            <p>Для того, чтобы оставить отзыв <a href="{% url 'login' %}?next={{ request.path }}">авторизуйтесь</a> в системе!</p>
+                        {% endif %}
+
+                        <div class="comments"></div>
+                        <div class="commentList">
+                            {% for review in project.review_set.all %}
+                                {% if review.review_body %}
+                                    <div class="comment">
+                                        <a href="{% url 'profile_user' review.user.id %}">
+                                            <img src="{{ review.user.image_url }}" alt="profile_image" class="avatar avatar--md">
+                                        </a>
+
+                                        <div class="comment__details">
+                                            <a href="{% url 'profile_user' review.user.id %}" class="comment__author">{{ review.user.username }}</a>
+                                            <p class="comment__info">
+                                                {{ review.review_body|linebreaksbr }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

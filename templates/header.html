@@ -1,0 +1,44 @@
+{% load static %}
+<header class="header">
+    <div class="container container--narrow">
+        <a href="{% url 'home_page' %}" class="header__logo">
+            <i class="fa-solid fa-d"></i>cierra
+        </a>
+        <nav class="header__nav">
+
+            <input type="checkbox" id="responsive-menu"/>
+            <label for="responsive-menu" class="toggle-menu">
+                <span>Меню</span>
+                <div class="toggle-menu__lines"></div>
+            </label>
+
+            <ul class="header__menu">
+                <div class="dropdown">
+                    <li class="header__menuItemDrop">Проекты</li>
+                    <div class="dropdown-content">
+                        <a href="#" class="header__menuItemDropLink">Проекты Django</a>
+                        <a href="{% url 'pyqt_projects' %}" class="header__menuItemDropLink">Проекты PyQt</a>
+                    </div>
+                </div>
+
+                <li class="header__menuItem"><a href="{% url 'profiles' %}">Профили</a></li>
+
+                {% if request.user.is_authenticated %}
+
+                    <div class="dropdown">
+                        <li class="header__menuItemDrop"><img src="{{ request.user.profile.image_url }}" alt="ProfileIMG" class="avatar avatar--sm"></li>
+                        <div class="dropdown-content">
+                            <a href="{% url 'account' %}" class="header__menuItemDropLink">Мой профиль</a>
+                            <a href="{% url 'inbox' %}" class="header__menuItemDropLink">Почта</a>
+                            <hr>
+                            <a href="{% url 'logout' %}" class="header__menuItemDropLink">Выйти</a>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <li class="header__menuItem"><a href="{% url 'login' %}">Войти/Зарегистрироваться</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>

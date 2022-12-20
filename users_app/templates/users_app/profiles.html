@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница пользователей{% endblock %}
+
+{% block content %}
+    <main class="projects">
+        <section class="hero-section text-center">
+            <div class="container container--narrow">
+                <div class="hero-section__box">
+                    <h2>Поиск среди пользователей</h2>
+                </div>
+                <div class="hero-section__search">
+                    <form action="{% url 'profiles' %}" id="search_form" class="form" method="GET">
+                        <div class="form__field">
+                            <label for="formInput#search">Поиск среди пользователей</label>
+                            <input type="text" class="input input--text" id="formInput#search" name="search_query" value="{{ search_query }}" placeholder="Поиск по логину, имени, фамилии, информации об аккаунте..">
+                        </div>
+
+                        <input type="submit" value="Поиск" class="btn btn--sub btn--lg">
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="devlist">
+            <div class="container">
+                <div class="grid grid--three">
+                    {% for profile in profiles %}
+                        <div class="column card">
+                            <div class="dev">
+                                <a href="{% url 'profile_user' profile.id %}" class="card__body">
+                                    <div class="dev__profile">
+                                        <img src="{{ profile.image_url }}" alt="profile_img" class="avatar avatar--md">
+                                        <div class="dev__meta">
+                                            <h3>{{ profile.username }}</h3>
+                                            <h5>{{ profile.first_name }} {% if profile.second_name %} {{ profile.second_name }} {% endif %}</h5>
+                                        </div>
+                                    </div>
+                                        {% if profile.about_myself %}
+                                            <p class="dev__info">
+                                                {{ profile.about_myself|truncatechars:100 }}
+                                            </p>
+                                        {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
+    </main>
+{% endblock %}

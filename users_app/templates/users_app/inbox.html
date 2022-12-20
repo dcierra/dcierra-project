@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Личные сообщения{% endblock %}
+
+{% block content %}
+    <main class="projects">
+        <section class="hero-section text-center">
+            <div class="container container--narrow">
+                <div class="hero-section__box">
+                    <h2>Поиск среди писем</h2>
+                </div>
+                <div class="hero-section__search">
+                    <form action="{% url 'inbox' %}" id="search_form" class="form" method="GET">
+                        <div class="form__field">
+                            <label for="formInput#search">Поиск среди писем</label>
+                            <input type="text" class="input input--text" id="formInput#search" name="search_query" value="{{ search_query }}" placeholder="Поиск по имени отправителя, названию или содержанию письма..">
+                        </div>
+
+                        <input type="submit" value="Поиск" class="btn btn--sub btn--lg">
+                    </form>
+                </div>
+            </div>
+        </section>
+        <div class="content-box">
+            {% if all_messages %}
+                <br><h3 class="inbox__title">У вас <<span>{{ unread_messages }}</span>> непрочитанных сообщений.</h3>
+                <ul class="messages">
+                    {% for message in all_messages %}
+                        {% if not message.is_read %}
+                            <li class="message message--unread">
+                        {% else %}
+                            <li class="message">
+                        {% endif %}ip
+                                <a href="{% url 'message_page' message.id %}">
+                                    {% if message.first_name %}<span class="message__subject">Имя отправителя: {{ message.first_name|truncatechars:10 }}</span>{% endif %}
+                                    <span class="message__subject">Тема письма: {{ message.subject|truncatechars:10 }}</span>
+                                    <span class="message__subject">{{ message.body|truncatechars:20 }}</span>
+                                    <span class="message__subject">{{ message.created.date }}<br>Время: {{ message.created.time }}</span>
+                                    <form action="{% url 'message_delete' message.id %}" method="POST" style="display: inline-block;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="fa-solid fa-trash btn btn--sub " onclick="return confirm_delete('Вы действительно хотите удалить это сообщение?')" hidden></button>
+                                    </form>
+                                </a>
+                            </li>
+                    {% endfor %}
+                </ul>
+                <br><form action="{% url 'all_messages_delete' %}" method="POST" style="display: inline-block;">
+                    {% csrf_token %}
+                <button type="submit" class="btn btn--sub" onclick="return confirm_delete('Вы действительно хотите удалить ВСЕ сообщения?\nЭто действите невозможно отменить.')" hidden><i class="fa-solid fa-trash"> Удалить все сообщения</i></button>
+                </form>
+            {% else %}
+                <br><h2 class="inbox__title">Похоже, что у вас пока нет сообщений.</h2>
+            {% endif %}
+        </div>
+        {% include 'pagination.html' with queryset=all_messages custom_range=custom_range %}
+    </main>
+{% endblock %}

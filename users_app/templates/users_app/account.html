@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %} Личный кабинет - {{ profile.username }} {% endblock %}
+
+{% block content %}
+    <main class="settingsPage profile my-md">
+        <div class="container">
+            <div class="layout">
+                <div class="column column--1of3">
+                    <div class="card text-center">
+                        <div class="card__body dev">
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'account_edit' %}?next=/account"><i class="fa-solid fa-pen-to-square"></i> Редактировать</a>
+                            <h1 class="dev__name">{{ profile.username }}</h1>
+                            <img src="{{ profile.image_url }}" alt="ProfileIMG" class="avatar avatar--xl dev__avatar">
+                            <h2 class="dev__name">{{ profile.first_name }} {% if profile.second_name %} {{ profile.second_name }} {% endif %}</h2>
+                            <h2 class="dev__title">{{ profile.email }}</h2><br>
+                            {% if profile.link_github or profile.link_vk or profile.link_telegram %}
+                                <ul class="dev__social">
+                                    <li>
+                                        {% if profile.link_github %}
+                                            <a class="tag tag--pill tag--main settings__btn" href="{{ profile.link_github }}" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                                        {% endif %}
+                                    </li>
+                                    <li>
+                                        {% if profile.link_vk %}
+                                            <a class="tag tag--pill tag--main settings__btn" href="{{ profile.link_vk }}" target="_blank"><i class="fa-brands fa-vk"></i> VK</a>
+                                        {% endif %}
+                                    </li>
+                                    <li>
+                                        {% if profile.link_telegram %}
+                                            <a class="tag tag--pill tag--main settings__btn" href="{{ profile.link_telegram }}" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if request.user.profile.username != 'dcierra' %}
+                    {% if profile.about_myself %}
+                        <div class="content-box">
+                            <div class="devInfo">
+                                <h3 class="devInfo__title">Обо мне</h3>
+                                <p class="devInfo__about">
+                                    {{ profile.about_myself }}
+                                </p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="content-box">
+                            <h4 class="text-center">Упс.. Похоже вы не оставили информацию о себе..</h4>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="column column--2of3">
+                    <div class="devInfo">
+                        <h3 class="devInfo__title">Обо мне</h3>
+                        <p class="devInfo__about">
+                            {{ profile.about_myself }}
+                        </p>
+                    </div>
+
+                    <div class="settings">
+                        <h3 class="settings__title">Проекты PyQt</h3>
+                        <a href="{% url 'pyqt_project_create' %}?next=/account" class="tag tag--pill tag--sub settings__btn tag--lg">Добавить проект</a>
+                    </div>
+                    <table class="settings__table">
+                        {% for project in projects %}
+                            <tr>
+                                <td class="settings__thumbnail">
+                                    <a href="{% url 'pyqt_project_page' project.id %}"><img src="{{ project.image_url }}" alt="project_img"></a>
+                                </td>
+                                <td class="settings__tableInfo">
+                                    <a href="{% url 'pyqt_project_page' project.id %}">{{ project.title }}</a>
+                                    <p>
+                                        {{ project.description }}
+                                    </p>
+                                </td>
+                                <td class="settings__tableActions">
+                                    <a href="{% url 'pyqt_project_update' project.id %}?next=/account" class="tag tag--pill tag--main settings__btn"><i class="fa-solid fa-pen-to-square"></i> Редактировать</a>
+                                    <a href="{% url 'pyqt_project_delete' project.id %}?next=/account" class="tag tag--pill tag--main settings__btn"><i class="fa-solid fa-trash"></i> Удалить</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                    <div class="settings">
+                        <h3 class="settings__title">Проекты Django</h3>
+                        <a href="" class="tag tag--pill tag--sub settings__btn tag--lg">Добавить проект</a>
+                    </div>
+                    <table class="settings__table">
+
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
