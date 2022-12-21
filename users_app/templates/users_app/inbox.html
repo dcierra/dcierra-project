@@ -4,23 +4,7 @@
 
 {% block content %}
     <main class="projects">
-        <section class="hero-section text-center">
-            <div class="container container--narrow">
-                <div class="hero-section__box">
-                    <h2>Поиск среди писем</h2>
-                </div>
-                <div class="hero-section__search">
-                    <form action="{% url 'inbox' %}" id="search_form" class="form" method="GET">
-                        <div class="form__field">
-                            <label for="formInput#search">Поиск среди писем</label>
-                            <input type="text" class="input input--text" id="formInput#search" name="search_query" value="{{ search_query }}" placeholder="Поиск по имени отправителя, названию или содержанию письма..">
-                        </div>
-
-                        <input type="submit" value="Поиск" class="btn btn--sub btn--lg">
-                    </form>
-                </div>
-            </div>
-        </section>
+        {% include 'search_bar.html' with title='писем' placeholder_info='Поиск по имени отправителя, названию или содержанию письма..' %}
         <div class="content-box">
             {% if all_messages %}
                 <br><h3 class="inbox__title">У вас <<span>{{ unread_messages }}</span>> непрочитанных сообщений.</h3>

@@ -4,23 +4,7 @@
 
 {% block content %}
     <main class="projects">
-        <section class="hero-section text-center">
-            <div class="container container--narrow">
-                <div class="hero-section__box">
-                    <h2>Поиск среди PyQt проектов</h2>
-                </div>
-                <div class="hero-section__search">
-                    <form action="{% url 'pyqt_projects' %}" id="search_form" class="form" method="GET">
-                        <div class="form__field">
-                            <label for="formInput#search">Поиск среди PyQt проектов</label>
-                            <input type="text" class="input input--text" id="formInput#search" name="search_query" value="{{ search_query }}" placeholder="Поиск по названию, описанию проекта..">
-                        </div>
-
-                        <input type="submit" value="Поиск" class="btn btn--sub btn--lg">
-                    </form>
-                </div>
-            </div>
-        </section>
+        {% include 'search_bar.html' with title='PyQt проектов' placeholder_info='Поиск по названию, описанию проекта..' %}
         <section class="projectsList">
             <div class="container">
                 <div class="grid grid--three">

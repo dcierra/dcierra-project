@@ -9,7 +9,11 @@ from dcierra.utils import paginate, search_data
 
 
 def home_page(request):
-    context = {}
+    try:
+        profile = Profile.objects.get(username='dcierra')
+    except:
+        profile = request.user.profile
+    context = {'profile': profile}
     return render(request, 'users_app/home_page.html', context)
 
 
