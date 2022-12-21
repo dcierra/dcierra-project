@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, ProfileForm, MessageForm
 from .models import Profile
 from dcierra.utils import paginate, search_data
+from django_app.models import Project as DjangoProject
 
 
 def home_page(request):
@@ -86,7 +87,8 @@ def profiles(request):
 def account_page(request):
     profile = request.user.profile
     projects = profile.project_set.all()
-    context = {'profile': profile, 'projects': projects}
+    django_projects = DjangoProject.objects.all()
+    context = {'profile': profile, 'projects': projects, 'django_projects': django_projects}
     return render(request, 'users_app/account.html', context)
 
 

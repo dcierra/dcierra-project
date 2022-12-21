@@ -1,4 +1,5 @@
 from users_app.models import Profile, Message
+from django_app.models import Project as DjangoProject
 from pyqt_app.models import Project
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -42,6 +43,8 @@ def search_data(request, data_name):
         data = inbox_set_filter(search_query, request.user.profile.messages.all())
     if data_name == 'projects':
         data = projects_set_filter(search_query)
+    if data_name == 'django_projects':
+        data = django_projects_set_filter(search_query)
 
     return data, search_query
 
@@ -71,6 +74,15 @@ def projects_set_filter(search_query):
         Q(title__icontains=search_query) |
         Q(description__icontains=search_query) |
         Q(owner__username__icontains=search_query)
+    )
+
+    return set_filter
+
+
+def django_projects_set_filter(search_query):
+    set_filter = DjangoProject.objects.distinct().filter(
+        Q(title__icontains=search_query) |
+        Q(description__icontains=search_query)
     )
 
     return set_filter

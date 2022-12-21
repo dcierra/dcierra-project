@@ -86,10 +86,26 @@
 
                     <div class="settings">
                         <h3 class="settings__title">Проекты Django</h3>
-                        <a href="" class="tag tag--pill tag--sub settings__btn tag--lg">Добавить проект</a>
+                        <a href="{% url 'django_project_create' %}?next=/account" class="tag tag--pill tag--sub settings__btn tag--lg">Добавить проект</a>
                     </div>
                     <table class="settings__table">
-
+                        {% for project in django_projects %}
+                            <tr>
+                                <td class="settings__thumbnail">
+                                    <a href="{{ project.link }}"><img src="{{ project.image_url }}" alt="project_img"></a>
+                                </td>
+                                <td class="settings__tableInfo">
+                                    <a href="{{ project.link }}">{{ project.title }}</a>
+                                    <p>
+                                        {{ project.description }}
+                                    </p>
+                                </td>
+                                <td class="settings__tableActions">
+                                    <a href="{% url 'django_project_update' project.id %}?next=/account" class="tag tag--pill tag--main settings__btn"><i class="fa-solid fa-pen-to-square"></i> Редактировать</a>
+                                    <a href="{% url 'django_project_delete' project.id %}?next=/account" class="tag tag--pill tag--main settings__btn"><i class="fa-solid fa-trash"></i> Удалить</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </table>
                 </div>
                 {% endif %}
