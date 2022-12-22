@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TodoForm
 from dcierra.utils import paginate, search_data
 
@@ -40,7 +40,7 @@ def todo_create(request):
 @login_required(login_url='login')
 def todo_update(request, todo_id):
     profile = request.user.profile
-    todo = profile.todo_set.get(id=todo_id)
+    todo = get_object_or_404(profile.todo_set, id=todo_id)
     form = TodoForm(instance=todo)
 
     if request.method == 'POST':
@@ -56,7 +56,7 @@ def todo_update(request, todo_id):
 @login_required(login_url='login')
 def todo_delete(request, todo_id):
     profile = request.user.profile
-    todo = profile.todo_set.get(id=todo_id)
+    todo = get_object_or_404(profile.todo_set, id=todo_id)
 
     if request.method == 'POST':
         todo.delete()
@@ -67,7 +67,7 @@ def todo_delete(request, todo_id):
 @login_required(login_url='login')
 def todo_complete(request, todo_id):
     profile = request.user.profile
-    todo = profile.todo_set.get(id=todo_id)
+    todo = get_object_or_404(profile.todo_set, id=todo_id)
 
     if request.method == 'POST':
         todo.date_completed = timezone.now()
@@ -81,7 +81,7 @@ def todo_complete(request, todo_id):
 @login_required(login_url='login')
 def todo_uncompleted(request, todo_id):
     profile = request.user.profile
-    todo = profile.todo_set.get(id=todo_id)
+    todo = get_object_or_404(profile.todo_set, id=todo_id)
 
     if request.method == 'POST':
         todo.date_completed = None

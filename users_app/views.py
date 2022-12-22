@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, ProfileForm, MessageForm
-from .models import Profile
+from .models import Profile, Message
 from dcierra.utils import paginate, search_data
 from django_app.models import Project as DjangoProject
 
@@ -122,8 +122,7 @@ def inbox(request):
 
 @login_required(login_url='login')
 def message_page(request, message_id):
-    profile = request.user.profile
-    msg = profile.messages.get(id=message_id)
+    msg = get_object_or_404(Message, id=message_id, recipient=request.user.profile)
 
     if not msg.is_read:
         msg.is_read = True
@@ -162,8 +161,7 @@ def send_message(request, profile_id):
 
 @login_required(login_url='login')
 def message_delete(request, message_id):
-    profile = request.user.profile
-    msg = profile.messages.get(id=message_id)
+    msg = get_object_or_404(Message, id=message_id, recipient=request.user.profile)
 
     if request.method == 'POST':
         msg.delete()
