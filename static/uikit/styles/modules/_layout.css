@@ -5,7 +5,9 @@
 }
 
 .layout > .column {
-  margin-bottom: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
 
 .layout > .column.column--1of3 {

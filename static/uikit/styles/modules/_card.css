@@ -45,3 +45,15 @@
 .card.card--dark .card__header {
   box-shadow: var(--generic-shadow);
 }
+
+.card.card--important {
+  color: #fc8a88;
+}
+
+.card.card--important a{
+  color: #fc8a88;
+}
+
+.card a {
+  color: var(--color-text);
+}

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'pyqt_app',
     'django_app',
 
+    'todo_app',
+
     'rest_framework',
     'corsheaders',
 ]

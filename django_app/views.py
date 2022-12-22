@@ -51,5 +51,5 @@ def django_project_delete(request, project_id):
         project.delete()
         return redirect('account')
 
-    context = {'onbject': project.title}
+    context = {'object': project.title}
     return render(request, 'delete_object.html', context)

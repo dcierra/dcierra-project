@@ -14,7 +14,7 @@
                             <li class="message message--unread">
                         {% else %}
                             <li class="message">
-                        {% endif %}ip
+                        {% endif %}
                                 <a href="{% url 'message_page' message.id %}">
                                     {% if message.first_name %}<span class="message__subject">Имя отправителя: {{ message.first_name|truncatechars:10 }}</span>{% endif %}
                                     <span class="message__subject">Тема письма: {{ message.subject|truncatechars:10 }}</span>

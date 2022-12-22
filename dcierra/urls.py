@@ -9,6 +9,9 @@ urlpatterns = [
     path('pyqt-projects/', include('pyqt_app.urls')),
     path('django-projects/', include('django_app.urls')),
     path('api/', include('api.urls')),
+
+    # django projects
+    path('todo/', include('todo_app.urls')),
 ]
 
 

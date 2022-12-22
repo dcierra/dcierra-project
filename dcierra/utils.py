@@ -45,6 +45,10 @@ def search_data(request, data_name):
         data = projects_set_filter(search_query)
     if data_name == 'django_projects':
         data = django_projects_set_filter(search_query)
+    if data_name == 'todos':
+        data = request.user.profile.todo_set.filter(date_completed__isnull=True)
+    if data_name == 'completed_todos':
+        data = request.user.profile.todo_set.filter(date_completed__isnull=False)
 
     return data, search_query
 
