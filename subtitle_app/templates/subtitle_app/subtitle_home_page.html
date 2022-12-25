@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Перевод субтитров{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center m-xl">Перевод субтитров</h2>
+
+        <div class="card card--dark">
+            <h5 class="text-center m-sm">Максимальный размер файла: 1МБ<br>Поддерживаемые расширения: crt, vtt</h5>
+
+            <div class="card__body text-center">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form__field">
+                        {{ form.original_file }}
+                    </div>
+
+                    <div class="form__field">
+                        <p class="text-center">{{ form.translation_language.label }}</p>
+                        {{ form.translation_language }}
+                    </div>
+
+
+                    <input type="submit" value="Отправить" class="btn btn--sub btn--lg my-md">
+                </form>
+
+                {% if name_output_file %}
+                    <a href="{% static name_output_file %}" class="btn btn--sub btn--lg my-md">Скачать</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

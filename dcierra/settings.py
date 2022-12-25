@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_app',
 
     'todo_app',
+    'subtitle_app',
 
     'rest_framework',
     'corsheaders',
