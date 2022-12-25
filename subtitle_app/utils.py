@@ -2,6 +2,7 @@ import pysubs2
 import requests
 import threading
 from .models import Subtitle
+from django.conf import settings
 
 
 def translate_subtitle(sub, translation_language):
@@ -21,7 +22,7 @@ def translate_subtitles(subtitle_id):
     translation_language = subtitle.translation_language
     threads = []
 
-    subs = pysubs2.load(f'static/images/{input_file.name}')
+    subs = pysubs2.load(f'{settings.BASE_DIR}/static/images/{input_file.name}')
 
     for sub in subs:
         t = threading.Thread(target=translate_subtitle, args=(sub, translation_language))
@@ -32,6 +33,6 @@ def translate_subtitles(subtitle_id):
         t.join()
 
     name_output_file = f'{translation_language}.{input_file.name.split("/")[1]}'
-    output_file = f'static/images/output_files_subtitle/{name_output_file}'
+    output_file = f'{settings.BASE_DIR}/static/images/output_files_subtitle/{name_output_file}'
     subs.save(output_file)
     return f'images/output_files_subtitle/{name_output_file}'

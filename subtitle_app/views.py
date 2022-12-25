@@ -22,7 +22,7 @@ def subtitle_home_page(request):
             context = {'form': form, 'name_output_file': name_output_file}
             return render(request, 'subtitle_app/subtitle_home_page.html', context)
         except:
-            context = {'form': form}
+            context = {'form': form, 'error': 'Размер файла И/ИЛИ расширение не поддерживается.'}
             return render(request, 'subtitle_app/subtitle_home_page.html', context)
 
     return render(request, 'subtitle_app/subtitle_home_page.html', context)
