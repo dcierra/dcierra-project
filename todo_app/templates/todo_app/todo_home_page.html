@@ -24,15 +24,15 @@
                             <div class="layout">
                                 <div class="column column--2of3">
                                     <div class="column">
-                                        <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h6>
+                                        <h5><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h5>
                                     </div>
                                     {% if todo.description %}
                                         <div class="column">
-                                            <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></h6>
+                                            <p><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></p>
                                         </div>
                                     {% endif %}
                                     <div class="column">
-                                            <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">Добавлено: {{ todo.created.date }} в {{ todo.created.time }}</a></h6>
+                                            <p><a href="{% url 'todo_update' todo.id %}?next=/todo">Добавлено: {{ todo.created.date }} в {{ todo.created.time }}</a></p>
                                     </div>
                                     <form action="{% url 'todo_complete' todo.id %}" method="POST" style="display: inline-block;">
                                         {% csrf_token %}
@@ -84,15 +84,15 @@
                                     </div>
                                     <div class="column column--2of3">
                                         <div class="column">
-                                            <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h6>
+                                            <h5><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h5>
                                         </div>
                                         {% if todo.description %}
                                             <div class="column">
-                                                <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></h6>
+                                                <p><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></p>
                                             </div>
                                         {% endif %}
                                         <div class="column">
-                                            <h6><a href="{% url 'todo_update' todo.id %}?next=/todo">Завершено: {{ todo.date_completed.date }} в {{ todo.date_completed.time }}</a></h6>
+                                            <p><a href="{% url 'todo_update' todo.id %}?next=/todo">Завершено: {{ todo.date_completed.date }} в {{ todo.date_completed.time }}</a></p>
                                         </div>
                                     </div>
                                 </div>
