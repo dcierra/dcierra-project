@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
+from .validators import validate_file_size, validate_file_extension
 
 
 class Profile(models.Model):
@@ -11,7 +12,10 @@ class Profile(models.Model):
     email = models.EmailField(max_length=200, verbose_name='Эл. почта')
     about_myself = models.TextField(blank=True, null=True, verbose_name='О себе')
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/',
-                                      default='profiles/default_profile_image.png', verbose_name='Изображение профиля')
+                                      default='profiles/default_profile_image.png',
+                                      verbose_name='Изображение профиля', validators=[validate_file_size,
+                                                                                      validate_file_extension
+                                                                                      ])
     link_vk = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на вк')
     link_github = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на гитхаб')
     link_telegram = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на телеграм')

@@ -8,11 +8,22 @@
         <h2 class="text-center m-xl">Перевод субтитров</h2>
 
         <div class="card card--dark">
-            {% if error %}
-                <h5 class="text-center m-sm" style="color: red">{{ error }}</h5>
-            {% else %}
-                <h5 class="text-center m-sm">Максимальный размер файла: 1МБ<br>Поддерживаемые расширения: crt, vtt</h5>
+
+            {% if form.errors %}
+                <div class="card__header text-center">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert--error">
+                                <p class="alert__message text-center">
+                                    {{ error }}
+                                </p>
+                                <button class="alert__close">x</button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
             {% endif %}
+
             <div class="card__body text-center">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
