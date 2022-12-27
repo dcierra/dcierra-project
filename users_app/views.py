@@ -27,11 +27,12 @@ def register_page(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
+            if not Profile.objects.filter(username=user.username.lower()).exists():
+                user.username = user.username.lower()
+                user.save()
 
-            login(request, user)
-            return redirect('account_edit')
+                login(request, user)
+                return redirect('account_edit')
 
     context = {'page': page, 'form': form}
     return render(request, 'users_app/login_register.html', context)
@@ -39,6 +40,7 @@ def register_page(request):
 
 def login_page(request):
     page = 'Авторизация'
+    error = ''
 
     if request.user.is_authenticated:
         return redirect('home_page')
@@ -50,16 +52,17 @@ def login_page(request):
         try:
             user = User.objects.get(username=username)
         except:
-            pass
+            error = 'Пользователь не найден'
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('home_page')
+        else:
+            error = 'Имя пользователя И/ИЛИ пароль введены неправильно'
 
-
-    context = {'page': page}
+    context = {'page': page, 'error': error}
     return render(request, 'users_app/login_register.html', context)
 
 
