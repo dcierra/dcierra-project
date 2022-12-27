@@ -29,7 +29,7 @@
                         <li class="header__menuItemDrop"><img src="{{ request.user.profile.image_url }}" alt="ProfileIMG" class="avatar avatar--sm"></li>
                         <div class="dropdown-content">
                             <a href="{% url 'account' %}" class="header__menuItemDropLink">Мой профиль</a>
-                            <a href="{% url 'inbox' %}" class="header__menuItemDropLink">Почта</a>
+                            <a href="{% url 'inbox' %}" class="header__menuItemDropLink">Почта <span>({{ request.user.profile.count_unread_messages }})</span></a>
                             <hr>
                             <a href="{% url 'logout' %}" class="header__menuItemDropLink">Выйти</a>
                         </div>

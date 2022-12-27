@@ -36,6 +36,10 @@ class Profile(models.Model):
 
         return url
 
+    @property
+    def count_unread_messages(self):
+        return self.messages.filter(is_read=False).count()
+
     def __str__(self):
         return f'{self.username}'
 
