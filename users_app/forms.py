@@ -51,6 +51,7 @@ class ProfileForm(ModelForm):
             'email',
             'about_myself',
             'profile_image',
+            'city',
             'link_vk',
             'link_github',
             'link_telegram',

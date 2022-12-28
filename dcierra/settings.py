@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'todo_app',
     'subtitle_app',
+    'weather_app',
 
     'rest_framework',
     'corsheaders',
@@ -178,3 +179,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# API FOR APPS
+
+WEATHER_API = env('WEATHER_API')
+IPGEO_API = env('IPGEO_API')

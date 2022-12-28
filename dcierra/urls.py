@@ -13,6 +13,7 @@ urlpatterns = [
     # django projects
     path('todo/', include('todo_app.urls')),
     path('subtitle-translate/', include('subtitle_app.urls')),
+    path('weather/', include('weather_app.urls')),
 ]
 
 

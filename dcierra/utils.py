@@ -49,6 +49,8 @@ def search_data(request, data_name):
         data = request.user.profile.todo_set.filter(date_completed__isnull=True)
     if data_name == 'completed_todos':
         data = request.user.profile.todo_set.filter(date_completed__isnull=False)
+    if data_name == 'weather':
+        data = request.user.profile.weather_set.filter(main_city=False)
 
     return data, search_query
 

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Погода{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card card--dark" style="margin-top: 10rem">
+            <h2 class="text-center m-md">Погода</h2>
+            <div class="layout">
+
+                <div class="column column--2of3">
+                    <div class="card card--dark" style="margin-left: 2rem">
+                        <h5 class="text-center">Ваш город:
+                            {% if profile %}
+                                <span style="color: var(--color-sub); font-size: 2.7rem">{{ profile.city }}</span>
+                            {% else %}
+                                <span style="color: var(--color-sub); font-size: 2.7rem">{{ city_guest }}</span>
+                            {% endif %}
+                        </h5>
+                        <div class="card__body">
+                            <div class="card" style="padding: 1rem; color: var(--color-sub)">
+                                <h3 class="text-center">Погода сейчас</h3><hr>
+                                {% if profile %}
+                                    <h3 class="text-center" style="font-weight: 900;">{{ weather_main_city.temp }} °C</h3>
+                                    <h5 class="text-center">{{ weather_main_city.description }}</h5><br>
+                                    <h5 style="margin-left: 2rem">Ощущается как: {{ weather_main_city.feels_like }} °C</h5>
+                                    <h5 style="margin-left: 2rem">Давление мм.р.ст: {{ weather_main_city.pressure }}</h5>
+                                    <h5 style="margin-left: 2rem">Влажность: {{ weather_main_city.humidity }}%</h5>
+                                    <h5 style="margin-left: 2rem">Скорость ветра: {{ weather_main_city.wind }} м/c</h5>
+                                {% else %}
+                                    <h3 class="text-center" style="font-weight: 900;">{{ temp }} °C</h3>
+                                    <h5 class="text-center">{{ description }}</h5><br>
+                                    <h5 style="margin-left: 2rem">Ощущается как: {{ feels_like }} °C</h5>
+                                    <h5 style="margin-left: 2rem">Давление мм.р.ст: {{ pressure }}</h5>
+                                    <h5 style="margin-left: 2rem">Влажность: {{ humidity }}%</h5>
+                                    <h5 style="margin-left: 2rem">Скорость ветра: {{ wind }} м/c</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column column--1of3">
+                    <div class="card card--dark" style="margin-right: 2rem">
+                        {% if error_message %}
+                            <div class="card__body">
+                                <div class="card">
+                                    <h6 class="text-center m-md">{{ error_message }}<a href="{% url 'login' %}?next={{ request.path }}" style="text-decoration: #2b669a underline; color: #2b669a">Авторизоваться</a></h6>
+                                </div>
+                            </div>
+                        {% else %}
+                            <h5 class="text-center">Отслеживаемые города <a href="{% url 'weather_add_city' %}?next=/weather"><i class="fa-solid fa-circle-plus"></i></a></h5>
+                            <div class="card__body">
+                                {% if cities %}
+                                    {% for city in cities %}
+                                        <div class="card" style="margin-top: 1rem">
+                                            <h4 class="text-center">{{ city.city }}</h4><hr>
+                                                {% if city.temp %}
+                                                    <h5 class="text-center" style="font-weight: 900;">
+                                                        {{ city.temp }} °C
+                                                    </h5>
+                                                {% else %}
+                                                    <p class="text-center">Упс, похоже возникла проблема<br>с получением данных.<br>Попробуйте обновить страницу, либо <br>проверьте правильность написания города.</p>
+                                                {% endif %}
+                                            <h6 class="text-center">{% if city.description %}{{ city.description }}{% endif %}</h6><hr style="margin-bottom: 1rem">
+                                            <form action="{% url 'weather_delete_city' city.id %}" method="POST" class="text-center">
+                                                {% csrf_token %}
+                                                <input style="font-size: 1rem; margin-bottom: 1rem" class="btn btn--md" type="submit" value="Удалить" onclick="return confirm_delete('Вы действительно хотите удалить этот город?')">
+                                            </form>
+                                        </div>
+                                    {% endfor %}
+                                    {% include 'pagination.html' with queryset=cities custom_range=custom_range %}
+                                {% else %}
+                                    <div class="card">
+                                        <h6 class="text-center m-md">Похоже, что у вас нет отслеживаемых городов.</h6>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

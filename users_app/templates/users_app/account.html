@@ -13,7 +13,8 @@
                             <h1 class="dev__name">{{ profile.username }}</h1>
                             <img src="{{ profile.image_url }}" alt="ProfileIMG" class="avatar avatar--xl dev__avatar">
                             <h2 class="dev__name">{{ profile.first_name }} {% if profile.second_name %} {{ profile.second_name }} {% endif %}</h2>
-                            <h2 class="dev__title">{{ profile.email }}</h2><br>
+                            <h2 class="dev__title">{{ profile.email }}</h2>
+                            {% if profile.city %}<h2 class="devInfo__about" style="text-align: center">{{ profile.city }}</h2>{% endif %}<br>
                             {% if profile.link_github or profile.link_vk or profile.link_telegram %}
                                 <ul class="dev__social">
                                     <li>
