@@ -4,7 +4,7 @@
   --color-sub: #3f4156;
   --color-sub-light: #51546e;
   --color-sub-lighter: #ededfd;
-  --color-text: #737373;
+  --color-text: #898991;
   --color-gray: #8b8b8b;
   --color-light: #e5e7eb;
   --color-light-gray: #767676;
@@ -15,6 +15,17 @@
   --color-success-bg: #def8e8;
   --color-error: #fc4b0b;
   --color-error-bg: #fff2ee;
+  /* dark theme */
+  --color-bg-dark: #1E1F21;
+  --color-bg-search: #262733;
+  --color-search: #d8d7e2;
+  --color-form: #1E1F21;
+  --color-form-border: #414143;
+  --color-bg-card: #1D1C1B;
+  --color-bg-card-dark: #2f3135;
+  --color-btn: #2B2D30;
+  --color-tag: #16262b;
+
   --font-monospace: 'Fira Code', 'Courier New', courier, monospace;
   --font-base: 'Roboto Condensed', sans-serif;
   --font-regular: 300;

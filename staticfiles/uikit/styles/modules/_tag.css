@@ -1,7 +1,7 @@
 .tag {
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-sub);
+  background-color: var(--color-tag);
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -20,15 +20,15 @@
 }
 
 .tag > small {
-  color: var(--color-white);
+  color: var(--color-search);
 }
 
 .tag--outline > small {
-  color: var(--color-sub);
+  color: var(--color-search);
 }
 
 .tag--outline {
-  border: 2px solid var(--color-sub);
+  border: 2px solid var(--color-form-border);
   background-color: transparent;
   padding: 0.4rem 1rem;
 }
@@ -39,15 +39,15 @@
 
 .tag--main,
 .tag--main > small {
-  background: var(--color-main-light);
-  color: var(--color-main);
+  background: var(--color-tag);
+  color: var(--color-search);
   font-weight: 500;
 }
 
 .tag--sub,
 .tag--sub > small {
-  background: var(--color-sub-lighter);
-  color: var(--color-sub-light);
+  background: var(--color-tag);
+  color: var(--color-search);
   font-weight: 500;
 }
 

@@ -45,9 +45,9 @@ textarea.input {
   width: 100%;
   padding: 1.2rem 1.5rem;
   border-radius: 0.5rem;
-  border: 2px solid var(--color-light);
+  border: 2px solid var(--color-form-border);
   transition: all 0.3s ease-in-out;
-  background-color: var(--color-bg);
+  background-color: var(--color-form);
 }
 
 input.input[type='text']:focus,
@@ -63,6 +63,7 @@ textarea.input:focus,
 textarea.input:active {
   outline: none;
   border: 2px solid var(--color-main);
+  background-color: var(--color-bg-card-dark);
 }
 
 .form__field--radio,

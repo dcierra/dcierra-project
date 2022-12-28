@@ -2,9 +2,9 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
-  background-color: var(--color-light);
+  background-color: var(--color-btn);
   font-weight: var(--font-medium);
-  color: var(--color-sub);
+  color: var(--color-search);
   text-decoration: none;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -50,12 +50,12 @@
 
 .btn--sub {
   background-color: var(--color-sub);
-  color: var(--color-white);
+  color: var(--color-search);
 }
 
 .btn.btn--sub--outline {
   background-color: transparent;
-  color: var(--color-sub);
+  color: var(--color-search);
   border: 2px solid var(--color-sub);
 }
 

@@ -1,7 +1,7 @@
 .card {
   border-radius: 1rem;
-  background-color: var(--color-white);
-  border: 1.5px solid var(--color-light);
+  background-color: var(--color-bg-card);
+  border: 1.5px solid var(--color-form-border);
   width: auto;
   height: auto;
   margin-top: 0.5rem;
@@ -25,7 +25,7 @@
 .card__header {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1.5px solid var(--color-light);
+  border-bottom: 1.5px solid var(--color-form-border);
 }
 
 .card__headerTitle {
@@ -39,7 +39,7 @@
 }
 
 .card.card--dark {
-  background-color: var(--color-light);
+  background-color: var(--color-bg-card-dark);
 }
 
 .card.card--dark .card__header {

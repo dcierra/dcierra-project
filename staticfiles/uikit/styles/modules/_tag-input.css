@@ -1,7 +1,7 @@
 .input-tags {
   width: 100%;
   border-radius: 0.5rem;
-  border: 2px solid var(--color-light);
+  border: 2px solid var(--color-search);
   padding: 0.6rem 0.8rem;
   display: flex;
   flex-wrap: wrap;
@@ -10,7 +10,7 @@
 }
 
 .input-tags:focus-within {
-  border: 2px solid var(--color-main);
+  border: 2px solid var(--color-form-border);
 }
 
 .input-tags input {
@@ -40,6 +40,6 @@
 }
 
 .input-tag-item i {
-  color: var(--color-white);
+  color: var(--color-search);
   cursor: pointer;
 }

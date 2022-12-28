@@ -12,13 +12,13 @@
                     <div class="card card--dark" style="margin-left: 2rem">
                         <h5 class="text-center">Ваш город:
                             {% if profile %}
-                                <span style="color: var(--color-sub); font-size: 2.7rem">{{ profile.city }}</span>
+                                <span style="color: var(--color-search); font-size: 2.7rem">{{ profile.city }}</span>
                             {% else %}
-                                <span style="color: var(--color-sub); font-size: 2.7rem">{{ city_guest }}</span>
+                                <span style="color: var(--color-search); font-size: 2.7rem">{{ city_guest }}</span>
                             {% endif %}
                         </h5>
                         <div class="card__body">
-                            <div class="card" style="padding: 1rem; color: var(--color-sub)">
+                            <div class="card" style="padding: 1rem; color: var(--color-search)">
                                 <h3 class="text-center">Погода сейчас</h3><hr>
                                 {% if profile %}
                                     <h3 class="text-center" style="font-weight: 900;">{{ weather_main_city.temp }} °C</h3>
@@ -54,15 +54,17 @@
                                 {% if cities %}
                                     {% for city in cities %}
                                         <div class="card" style="margin-top: 1rem">
-                                            <h4 class="text-center">{{ city.city }}</h4><hr>
-                                                {% if city.temp %}
-                                                    <h5 class="text-center" style="font-weight: 900;">
-                                                        {{ city.temp }} °C
-                                                    </h5>
-                                                {% else %}
-                                                    <p class="text-center">Упс, похоже возникла проблема<br>с получением данных.<br>Попробуйте обновить страницу, либо <br>проверьте правильность написания города.</p>
-                                                {% endif %}
-                                            <h6 class="text-center">{% if city.description %}{{ city.description }}{% endif %}</h6><hr style="margin-bottom: 1rem">
+                                            <h4 class="text-center">{{ city.city }}</h4>
+                                                <div class="border_line-card">
+                                                    {% if city.temp %}
+                                                        <h5 class="text-center" style="font-weight: 900;">
+                                                            {{ city.temp }} °C
+                                                        </h5>
+                                                    {% else %}
+                                                        <p class="text-center">Упс, похоже возникла проблема<br>с получением данных.<br>Попробуйте обновить страницу, либо <br>проверьте правильность написания города.</p>
+                                                    {% endif %}
+                                                    <h6 class="text-center">{% if city.description %}{{ city.description }}{% endif %}</h6>
+                                                </div>
                                             <form action="{% url 'weather_delete_city' city.id %}" method="POST" class="text-center">
                                                 {% csrf_token %}
                                                 <input style="font-size: 1rem; margin-bottom: 1rem" class="btn btn--md" type="submit" value="Удалить" onclick="return confirm_delete('Вы действительно хотите удалить этот город?')">
