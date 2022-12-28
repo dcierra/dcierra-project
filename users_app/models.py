@@ -13,9 +13,7 @@ class Profile(models.Model):
     about_myself = models.TextField(blank=True, null=True, verbose_name='О себе')
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/',
                                       default='profiles/default_profile_image.png',
-                                      verbose_name='Изображение профиля', validators=[validate_file_size,
-                                                                                      validate_file_extension
-                                                                                      ])
+                                      verbose_name='Изображение профиля', validators=[validate_file_size])
     city = models.CharField(null=True, blank=True, max_length=200, verbose_name='Город')
     link_vk = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на вк')
     link_github = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на гитхаб')
