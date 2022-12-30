@@ -32,6 +32,12 @@ class CustomUserCreationForm(UserCreationForm):
             self.add_error('email', 'Электронная почта уже используется!')
         return self.cleaned_data
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username.lower()).exists():
+            raise forms.ValidationError('Пользователь с данным логином уже зарегистрирован в системе')
+        return username
+
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
 

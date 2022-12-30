@@ -27,12 +27,11 @@ def register_page(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            if not Profile.objects.filter(username=user.username.lower()).exists():
-                user.username = user.username.lower()
-                user.save()
+            user.username = user.username.lower()
+            user.save()
 
-                login(request, user)
-                return redirect('account_edit')
+            login(request, user)
+            return redirect('account_edit')
 
     context = {'page': page, 'form': form}
     return render(request, 'users_app/login_register.html', context)
