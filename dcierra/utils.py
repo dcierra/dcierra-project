@@ -37,22 +37,17 @@ def search_data(request, data_name):
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
 
-    if data_name == 'profiles':
-        data = profiles_set_filter(search_query)
-    if data_name == 'inbox':
-        data = inbox_set_filter(search_query, request.user.profile.messages.all())
-    if data_name == 'projects':
-        data = projects_set_filter(search_query)
-    if data_name == 'django_projects':
-        data = django_projects_set_filter(search_query)
-    if data_name == 'todos':
-        data = request.user.profile.todo_set.filter(date_completed__isnull=True)
-    if data_name == 'completed_todos':
-        data = request.user.profile.todo_set.filter(date_completed__isnull=False)
-    if data_name == 'weather':
-        data = request.user.profile.weather_set.filter(main_city=False)
+    data = {
+        'profiles': profiles_set_filter(search_query),
+        'inbox': inbox_set_filter(search_query, request.user.profile.messages.all()),
+        'projects': projects_set_filter(search_query),
+        'django_projects': django_projects_set_filter(search_query),
+        'todos': request.user.profile.todo_set.filter(date_completed__isnull=True),
+        'completed_todos': request.user.profile.todo_set.filter(date_completed__isnull=False),
+        'weather': request.user.profile.weather_set.filter(main_city=False),
+    }
 
-    return data, search_query
+    return data.get(data_name), search_query
 
 
 # filter
