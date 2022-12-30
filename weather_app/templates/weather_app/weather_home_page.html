@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="card card--dark" style="margin-top: 10rem">
-            <h2 class="text-center m-md">Погода</h2>
+            <h2 class="text-center m-md">{% if request.GET.next %}<a href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a> {% endif %}Погода</h2>
             <div class="layout">
 
                 <div class="column column--2of3">

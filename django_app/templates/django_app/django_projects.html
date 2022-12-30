@@ -11,7 +11,7 @@
                     {% for project in projects %}
                         <div class="column">
                             <div class="card project">
-                                <a href="{{ project.link }}" class="project">
+                                <a href="{{ project.link }}?next=/django-projects" class="project">
                                     <img src="{{ project.image_url }}" alt="project img" class="project__thumbnail">
                                     <div class="card__body">
                                         <h3 class="project__title">{{ project.title }}</h3>

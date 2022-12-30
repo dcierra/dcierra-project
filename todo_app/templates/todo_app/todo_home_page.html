@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center m-xl">Мои задачи</h2>
+    <h2 class="text-center m-xl">{% if request.GET.next %}<a href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a> {% endif %}Мои задачи</h2>
     <h5 class="text-left"><a href="{% url 'todo_create' %}?next=/todo" class="tag tag--pill tag--main"><i
             class="fa-solid fa-circle-plus"> Добавить задачу</i></a></h5>
 
