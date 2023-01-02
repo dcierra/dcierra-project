@@ -608,7 +608,7 @@ img {
   margin-top: 3rem;
   margin-bottom: 5rem;
   padding: 0 3rem;
-  background: var(--color-white);
+  background: var(--color-bg-search);
 }
 
 .settings__table tr {

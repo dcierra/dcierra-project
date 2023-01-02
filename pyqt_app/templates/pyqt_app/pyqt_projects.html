@@ -11,7 +11,7 @@
                     {% for project in projects %}
                         <div class="column">
                             <div class="card project">
-                                <a href="{% url 'pyqt_project_page' project.id %}" class="project">
+                                <a href="{% url 'pyqt_project_page' project.id %}?next=/pyqt-projects" class="project">
                                     <img src="{{ project.image_url }}" alt="project img" class="project__thumbnail">
                                     <div class="card__body">
                                         <h3 class="project__title">{{ project.title }}</h3>
