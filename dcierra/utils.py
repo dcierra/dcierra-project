@@ -37,15 +37,27 @@ def search_data(request, data_name):
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
 
-    data = {
-        'profiles': profiles_set_filter(search_query),
-        'inbox': inbox_set_filter(search_query, request.user.profile.messages.all()),
-        'projects': projects_set_filter(search_query),
-        'django_projects': django_projects_set_filter(search_query),
-        'todos': request.user.profile.todo_set.filter(date_completed__isnull=True),
-        'completed_todos': request.user.profile.todo_set.filter(date_completed__isnull=False),
-        'weather': request.user.profile.weather_set.filter(main_city=False),
-    }
+    try:
+        user = request.user.profile
+    except:
+        user = None
+
+    if user:
+        data = {
+            'profiles': profiles_set_filter(search_query),
+            'inbox': inbox_set_filter(search_query, request.user.profile.messages.all()),
+            'projects': projects_set_filter(search_query),
+            'django_projects': django_projects_set_filter(search_query),
+            'todos': request.user.profile.todo_set.filter(date_completed__isnull=True),
+            'completed_todos': request.user.profile.todo_set.filter(date_completed__isnull=False),
+            'weather': request.user.profile.weather_set.filter(main_city=False),
+        }
+    else:
+        data = {
+            'profiles': profiles_set_filter(search_query),
+            'projects': projects_set_filter(search_query),
+            'django_projects': django_projects_set_filter(search_query),
+        }
 
     return data.get(data_name), search_query
 
