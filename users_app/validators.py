@@ -1,3 +1,5 @@
+import re
+
 from django.core.exceptions import ValidationError
 
 
@@ -18,3 +20,8 @@ def validate_file_extension(value):
         raise ValidationError("Расширение не поддерживается")
     else:
         return value
+
+def validate_filename(value):
+    pattern = re.compile(r'^[a-zA-Z0-9_]+\.[a-zA-Z]{3,4}$')
+    if not pattern.match(value.name):
+        raise ValidationError('Имя файла должно быть на английском языке')
