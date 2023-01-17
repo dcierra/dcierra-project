@@ -61,6 +61,7 @@ class ProfileForm(ModelForm):
             'link_vk',
             'link_github',
             'link_telegram',
+            'resume',
         ]
 
     def __init__(self, *args, **kwargs):
