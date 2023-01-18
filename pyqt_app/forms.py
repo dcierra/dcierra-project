@@ -10,6 +10,7 @@ class ProjectForm(ModelForm):
             'description',
             'project_image',
             'link_github',
+            'source_file',
         ]
 
     def __init__(self, *args, **kwargs):

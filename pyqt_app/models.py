@@ -1,6 +1,7 @@
 from django.db import models
 from users_app.models import Profile
 import uuid
+from .validators import validate_file_size, validate_file_extension, validate_filename
 
 
 class Project(models.Model):
@@ -11,6 +12,8 @@ class Project(models.Model):
                                       verbose_name='Изображение проекта', upload_to='projects/')
     link_github = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на гитхаб')
     like_total = models.IntegerField(default=0, blank=True, null=True)
+    source_file = models.FileField(null=True, blank=True, verbose_name='Исходник', upload_to='projects/sources',
+                                   validators=[validate_file_size, validate_file_extension, validate_filename])
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False, unique=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
 
