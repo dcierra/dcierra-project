@@ -5,8 +5,36 @@
 {% block content %}
 <div class="container">
     <h2 class="text-center m-xl">{% if request.GET.next %}<a href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a> {% endif %}Мои задачи</h2>
-    <h5 class="text-left"><a href="{% url 'todo_create' %}?next=/todo" class="tag tag--pill tag--main"><i
-            class="fa-solid fa-circle-plus"> Добавить задачу</i></a></h5>
+    <div class="layout">
+        <div class="column column--2of3">
+            <a href="{% url 'todo_create' %}?next=/todo" class="tag tag--pill tag--main" style="font-size: 1.5rem;"><i
+                    class="fa-solid fa-circle-plus"> Добавить задачу</i></a>
+
+            <a class="tag tag--pill tag--main" href="{% url 'add_category' %}?next=/todo" style="font-size: 1.5rem;"><i
+                    class="fa-solid fa-circle-plus"> Добавить категорию</i></a>
+
+            <form action="{% url 'delete_category' %}" method="POST" style="display: inline-block">
+                {% csrf_token %}
+                <button type="submit" class="tag tag--pill tag--main" style="border: none; font-size: 1.5rem;"
+                        onclick="return confirm_delete('Вы действительно хотите удалить все категории?')"
+                        hidden>Очистить все категории
+                </button>
+            </form>
+        </div>
+        <div class="column column--1of3">
+            <h5 class="text-left" style="display: inline-block">Сортировка по категориям: </h5>
+            <form style="display: inline-block">
+                <select name="category_id" onchange="this.form.submit()">
+                    <option value="">Все</option>
+                    {% for category in all_category %}
+                    <option value="{{ category.id }}" {% if category.id == category_id %} selected {% endif %}>
+                        {{ category.title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
 
     <div class="grid grid--two">
         <div class="column">
@@ -15,45 +43,45 @@
 
                 <div class="card__body">
                     {% if todos %}
-                    {% for todo in todos %}
-                    {% if todo.important %}
-                    <div class="card card--important">
-                        {% else %}
-                        <div class="card">
-                            {% endif %}
-                            <div class="layout">
-                                <div class="column column--2of3">
-                                    <div class="column">
-                                        <h5><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h5>
-                                    </div>
-                                    {% if todo.description %}
+                        {% for todo in todos %}
+                        {% if todo.important %}
+                        <div class="card card--important">
+                            {% else %}
+                            <div class="card">
+                                {% endif %}
+                                <div class="layout">
+                                    <div class="column column--2of3">
                                         <div class="column">
-                                            <p><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></p>
+                                            <h5><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.title|truncatechars:25 }}</a></h5>
                                         </div>
-                                    {% endif %}
-                                    <div class="column">
-                                            <p><a href="{% url 'todo_update' todo.id %}?next=/todo">Добавлено: {{ todo.created.date }} в {{ todo.created.time }}</a></p>
+                                        {% if todo.description %}
+                                            <div class="column">
+                                                <p><a href="{% url 'todo_update' todo.id %}?next=/todo">{{ todo.description|truncatechars:30 }}</a></p>
+                                            </div>
+                                        {% endif %}
+                                        <div class="column">
+                                                <p><a href="{% url 'todo_update' todo.id %}?next=/todo">Добавлено: {{ todo.created.date }} в {{ todo.created.time }}</a></p>
+                                        </div>
+                                        <form action="{% url 'todo_complete' todo.id %}" method="POST" style="display: inline-block;">
+                                            {% csrf_token %}
+                                            <input class="btn btn--md" type="submit" value="Завершить">
+                                        </form>
+                                        <form action="{% url 'todo_delete' todo.id %}" method="POST" style="display: inline-block;">
+                                            {% csrf_token %}
+                                            <input class="btn btn--md" type="submit" value="Удалить" onclick="return confirm_delete('Вы действительно хотите удалить эту задачу?')">
+                                        </form>
                                     </div>
-                                    <form action="{% url 'todo_complete' todo.id %}" method="POST" style="display: inline-block;">
-                                        {% csrf_token %}
-                                        <input class="btn btn--md" type="submit" value="Завершить">
-                                    </form>
-                                    <form action="{% url 'todo_delete' todo.id %}" method="POST" style="display: inline-block;">
-                                        {% csrf_token %}
-                                        <input class="btn btn--md" type="submit" value="Удалить" onclick="return confirm_delete('Вы действительно хотите удалить эту задачу?')">
-                                    </form>
-                                </div>
-                                <div class="column column--1of3">
-                                    <a href="{% url 'todo_update' todo.id %}?next=/todo"><i class="fa-solid fa-pen-to-square"> Редактировать</i></a>
+                                    <div class="column column--1of3">
+                                        <a href="{% url 'todo_update' todo.id %}?next=/todo"><i class="fa-solid fa-pen-to-square"> Редактировать</i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {% endfor %}
-                        {% include 'pagination.html' with queryset=todos custom_range=custom_range_todos %}
+                            {% endfor %}
+                            {% include 'pagination.html' with queryset=todos custom_range=custom_range_todos %}
                         {% else %}
-                        <div class="card">
-                            <h6 class="text-center m-md">Похоже, что у вас нет активных задач.</h6>
-                        </div>
+                            <div class="card">
+                                <h6 class="text-center m-md">Похоже, что у вас нет активных задач.</h6>
+                            </div>
                         {% endif %}
                     </div>
 

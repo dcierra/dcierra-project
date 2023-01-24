@@ -31,7 +31,7 @@ def paginate(request, data, results):
     return paginator, custom_range, data
 
 
-def search_data(request, data_name):
+def search_data(request, data_name, category_id=None):
     search_query = ''
 
     if request.GET.get('search_query'):
@@ -48,8 +48,8 @@ def search_data(request, data_name):
             'inbox': inbox_set_filter(search_query, request.user.profile.messages.all()),
             'projects': projects_set_filter(search_query),
             'django_projects': django_projects_set_filter(search_query),
-            'todos': request.user.profile.todo_set.filter(date_completed__isnull=True),
-            'completed_todos': request.user.profile.todo_set.filter(date_completed__isnull=False),
+            'todos': todos_filter(request.user, category_id),
+            'completed_todos': completed_todos_filter(request.user, category_id),
             'weather': request.user.profile.weather_set.filter(main_city=False),
         }
     else:
@@ -97,5 +97,23 @@ def django_projects_set_filter(search_query):
         Q(title__icontains=search_query) |
         Q(description__icontains=search_query)
     )
+
+    return set_filter
+
+
+def todos_filter(user, category_id):
+    if category_id:
+        set_filter = user.profile.todo_set.filter(date_completed__isnull=True, category=category_id)
+    else:
+        set_filter = user.profile.todo_set.filter(date_completed__isnull=True)
+
+    return set_filter
+
+
+def completed_todos_filter(user, category_id):
+    if category_id:
+        set_filter = user.profile.todo_set.filter(date_completed__isnull=False, category=category_id)
+    else:
+        set_filter = user.profile.todo_set.filter(date_completed__isnull=False)
 
     return set_filter

@@ -8,6 +8,18 @@
         <div class="formWrapper">
             <a href="{{ request.GET.next }}" class="backButton"><i class="fa-solid fa-backward"></i></a>
             <br>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert--error">
+                            <p class="alert__message text-center">
+                                {{ error }}
+                            </p>
+                            <button class="alert__close">x</button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
 
             <form class="form" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -19,6 +31,12 @@
                     <label>{{ form.description.label }}</label>
                     {{ form.description }}
                 </div>
+
+                <div class="form__field">
+                    <label>{{ form.category.label }}</label>
+                    {{ form.category }}
+                </div>
+
                 <div class="form__field form__field--checkbox">
                     <input class="input input--checkbox" id="formInput#checkbox-01" type="checkbox" value="{{ form.important }}"
                     <label for="formInput#checkbox-01">{{ form.important.label }}</label>
