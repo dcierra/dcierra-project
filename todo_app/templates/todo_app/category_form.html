@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница добавления/редактирования категории{% endblock %}
+
+{% block content %}
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a href="{{ request.GET.next }}" class="backButton"><i class="fa-solid fa-backward"></i></a>
+            <br>
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form__field">
+                    <label>{{ form.title.label }}</label>
+                    {{ form.title }}
+                </div>
+
+                <input type="submit" value="Отправить" class="btn btn--sub btn--lg my-md">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
