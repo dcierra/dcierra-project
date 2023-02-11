@@ -29,7 +29,7 @@
                 <img src="{{ location.image_url }}" alt="location image" class="quest_image"><br>
 
                 <div class="border_line">
-                    <h6 class="text-center m-md">{{ location.text|safe }}</h6>
+                    <h6 class="text-left m-md">{{ location.text|safe|linebreaksbr }}</h6>
                 </div>
 
                     {% if location.variant_set.all.count == 1 %}
