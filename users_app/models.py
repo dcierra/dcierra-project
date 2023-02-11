@@ -19,7 +19,7 @@ class Profile(models.Model):
     link_github = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на гитхаб')
     link_telegram = models.CharField(max_length=100, null=True, blank=True, verbose_name='Ссылка на телеграм')
     resume = models.FileField(null=True, blank=True, upload_to='profiles/resumes/', verbose_name='Резюме',
-                              validators=[validate_file_size, validate_file_extension, validate_filename])
+                              validators=[validate_file_size])
     quest_location_id = models.UUIDField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)

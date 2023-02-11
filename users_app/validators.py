@@ -24,6 +24,7 @@ def validate_file_extension(value):
     else:
         return value
 
+
 def validate_filename(value):
     pattern = re.compile(r'^[a-zA-Z0-9_]+\.[a-zA-Z]{3,4}$')
     if not pattern.match(value.name):
