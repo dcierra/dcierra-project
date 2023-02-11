@@ -11,7 +11,8 @@ def text_quest_home_page(request, location_id=settings.START_LOCATION_ID):
     except:
         user = None
 
-    if user:
+    print(user.quest_location_id)
+    if user and user.quest_location_id:
         if location_id != settings.START_LOCATION_ID:
             user.quest_location_id = location_id
             user.save()
@@ -19,6 +20,9 @@ def text_quest_home_page(request, location_id=settings.START_LOCATION_ID):
         else:
             location = Location.objects.get(id=user.quest_location_id)
     else:
+        if user:
+            user.quest_location_id = location_id
+            user.save()
         location = Location.objects.get(id=location_id)
 
     context = {'location': location}
