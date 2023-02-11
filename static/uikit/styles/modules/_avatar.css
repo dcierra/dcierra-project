@@ -4,6 +4,13 @@
   object-fit: cover;
 }
 
+.quest_image {
+  border-radius: 3%;
+  border: 7px solid var(--color-bg-card-dark);
+  object-fit: cover;
+  height: 50rem;
+}
+
 .home--page {
   height: 30rem;
 }

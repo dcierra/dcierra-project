@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница добавления локации{% endblock %}
+
+{% block content %}
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form__field">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+
+                <input type="submit" value="Отправить" class="btn btn--sub btn--lg my-md">
+
+                {% if location_id %}
+                    <div class="card">
+                        {% for variant in location.variant_set.all %}
+                            <div class="layout">
+                                <div class="column column--2of3">
+                                    {{ variant.title }}
+                                </div>
+                                <div class="column column--1of3">
+                                    <a href="{% url 'edit_variant' variant.id location_id %}" class="tag tag--pill tag--main">Редактировать</a>
+
+                                    <form action="{% url 'delete_variant' variant.id location_id %}" method="POST" style="display: inline-block">
+                                        {% csrf_token %}
+                                        <button type="submit" class="tag tag--pill tag--main" style="border: none"
+                                                onclick="return confirm_delete('Вы действительно хотите удалить этот вариант?')"
+                                                hidden>Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="text-center">
+                            <a href="{% url 'add_variant' location_id %}" class="tag tag--pill tag--main"><i class="fa-solid fa-circle-plus" style="font-size: 2rem;"> Добавить вариант</i></a>
+                        </div>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

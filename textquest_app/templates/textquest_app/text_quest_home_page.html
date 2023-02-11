@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Текстовый квест{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center m-md">{% if request.GET.next %}<a href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a> {% endif %}Текстовый квест "Unknown Detected"</h2>
+        {% if not request.user.profile %}
+            <div class="alert alert--error">
+                <p class="alert__message text-center">
+                    Для незарегистрированных пользователей сохранения недоступны
+                </p>
+                <button class="alert__close">x</button>
+            </div>
+        {% endif %}
+        {% if request.user.profile.username == 'admin' %}
+            <h5 class="text-center"><a href="{% url 'add_location' %}?next=/text-quest" class="tag tag--pill tag--main"><i
+                class="fa-solid fa-circle-plus"> Добавить локацию</i></a></h5>
+        {% endif %}
+
+        <div class="card">
+            <div class="card__body">
+
+<!--                <div class="border_line-card">-->
+<!--                    <h3 class="text-center">-->
+<!--                        {{ location.location_name }}-->
+<!--                    </h3>-->
+<!--                </div>-->
+                <img src="{{ location.image_url }}" alt="location image" class="quest_image"><br>
+
+                <div class="border_line">
+                    <h6 class="text-center m-md">{{ location.text|safe }}</h6>
+                </div>
+
+                <div class="grid grid--two" style="margin-top: 2rem;">
+                    {% for variant in location.variant_set.all %}
+                        {% if variant.next_location.id %}
+                            <div class="column text-center">
+                                <a href="{% url 'text_quest_home_page' variant.next_location.id %}" class="btn btn--sub--outline">{{ variant.title }}</a>
+                            </div>
+                        {% else %}
+                            <div class="column text-center">
+                                <div class="btn btn--sub--outline">
+                                    {{ variant.title }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if request.user.profile.username == 'admin' %}
+                    <a href="{% url 'create_character' %}" class="tag tag--pill tag--main">Добавить персонажа</a>
+                    <a href="{% url 'edit_location' location.id %}" class="tag tag--pill tag--main">Редактировать</a>
+                    <form action="{% url 'delete_location' location.id %}" method="POST" style="display: inline-block">
+                        {% csrf_token %}
+                        <button type="submit" class="tag tag--pill tag--main" style="border: none"
+                                onclick="return confirm_delete('Вы действительно хотите удалить эту локацию?')"
+                                hidden>Удалить</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

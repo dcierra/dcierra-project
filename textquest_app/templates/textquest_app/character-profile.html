@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль персонажа{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        {% if request.user.profile.username == 'admin' %}
+            <a href="{% url 'edit_character' character.id %}" class="tag tag--pill tag--main">Редактировать персонажа</a>
+            <form action="{% url 'delete_character' character.id %}" method="POST" style="display: inline-block">
+                {% csrf_token %}
+                <button type="submit" class="tag tag--pill tag--main" style="border: none"
+                        onclick="return confirm_delete('Вы действительно хотите удалить этого персонажа?')"
+                        hidden>Удалить</button>
+            </form>
+        {% endif %}
+        <div class="card" style="margin-top: 5rem; margin-bottom: 5rem;">
+            <div class="card__headerTitle">
+                <h2 class="text-center m-md">Текстовый квест "Unknown Detected"</h2>
+            </div>
+            <div class="card__body">
+                <div class="layout">
+                    <div class="column column--1of3">
+                        <h2 class="text-center m-md">{{ character.name }}</h2>
+                        <img src="{{ character.image_url }}" alt="character image" class="quest_image">
+                    </div>
+                    <div class="column column--2of3">
+                        <div class="card--dark">
+                            <div class="card" style="margin-top: 6rem">
+                                <h6 class="text-center m-md">
+                                    {{ character.bio }}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

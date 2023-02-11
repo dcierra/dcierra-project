@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавление варианта{% endblock %}
+
+{% block content %}
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert--error">
+                            <p class="alert__message text-center">
+                                {{ error }}
+                            </p>
+                            <button class="alert__close">x</button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form__field">
+                    <label>{{ form.title.label }}</label>
+                    {{ form.title }}
+                </div>
+                <div class="form__field">
+                    <label>{{ form.next_location.label }}</label>
+                    {{ form.next_location }}
+                </div>
+
+                <input type="submit" value="Отправить" class="btn btn--sub btn--lg my-md">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
