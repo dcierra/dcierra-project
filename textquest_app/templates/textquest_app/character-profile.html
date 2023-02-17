@@ -28,7 +28,11 @@
                         <div class="card--dark">
                             <div class="card" style="margin-top: 6rem">
                                 <h6 class="text-center m-md">
-                                    {{ character.bio }}
+                                    {% if character.bio %}
+                                        {{ character.bio }}
+                                    {% else %}
+                                        <p>Похоже, что я пока ничего не знаю о нем..</p>
+                                    {% endif %}
                                 </h6>
                             </div>
                         </div>

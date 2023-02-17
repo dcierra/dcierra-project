@@ -93,6 +93,8 @@ function confirm_delete(confirm_msg) {
 
 // background music for text quest
 let backgroundMusic = document.getElementById("background-music");
+let audio = document.querySelector("audio");
+audio.volume=0.1;
 
 let savedTime = localStorage.getItem("background-music");
 if (savedTime) {
