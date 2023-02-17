@@ -89,3 +89,24 @@ if (logout_button) {
 function confirm_delete(confirm_msg) {
     return confirm(confirm_msg)
 }
+
+
+// background music for text quest
+let backgroundMusic = document.getElementById("background-music");
+
+let savedTime = localStorage.getItem("background-music");
+if (savedTime) {
+  backgroundMusic.currentTime = savedTime;
+}
+
+backgroundMusic.addEventListener("pause", function () {
+  localStorage.setItem("background-music", backgroundMusic.currentTime);
+});
+
+backgroundMusic.addEventListener("ended", function () {
+  localStorage.removeItem("background-music");
+});
+
+window.addEventListener("beforeunload", function () {
+  localStorage.setItem("background-music", backgroundMusic.currentTime);
+});

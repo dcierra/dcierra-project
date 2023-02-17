@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Текстовый квест{% endblock %}
 
 {% block content %}
+    <audio id="background-music" data-key="background-music" autoplay loop>
+      <source src="{% static 'music/background-music.mp3' %}" type="audio/mpeg">
+    </audio>
+
     <div class="container">
         <h2 class="text-center m-md">{% if request.GET.next %}<a href="{{ request.GET.next }}"><i class="fa-solid fa-backward"></i></a> {% endif %}Текстовый квест "Unknown Detected"</h2>
         {% if not request.user.profile %}
